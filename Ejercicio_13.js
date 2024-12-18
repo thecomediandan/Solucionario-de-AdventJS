@@ -24,11 +24,75 @@
  * @returns {true|[number, number]} Return true if robot returns or position
  */
 function isRobotBack(moves) {
-    const listMoves = moves.split('')
+    let listMoves = moves
+    // let movesDefinitive = ''
+    let cartesian = [0, 0]
     for (let index = 0; index < listMoves.length; index++) {
-        
+        let op = '', left = '', right = ''
+        switch (listMoves.charAt(index)) {
+            case '*':
+                op = listMoves.charAt(index + 1).repeat(2)
+                left = listMoves.substring(0, index)
+                right = listMoves.substring(index + 2)
+                listMoves = left + op + right
+                index--
+                break;
+            
+            case '!':
+                if (listMoves.charAt(index + 1) == 'L') {
+                    op = 'R'
+                }
+                 if (listMoves.charAt(index + 1) == 'R') {
+                    op = 'L'
+                }
+                if (listMoves.charAt(index + 1) == 'U') {
+                    op = 'D'
+                }
+                if (listMoves.charAt(index + 1) == 'D'){
+                    op = 'U'
+                }
+                left = listMoves.substring(0, index)
+                right = listMoves.substring(index + 2)
+                listMoves = left + op + right
+                index--
+                break;
+
+            case '?':
+                if (listMoves.substring(0, index).includes(listMoves.charAt(index + 1))) {
+                    left = listMoves.substring(0, index)
+                    right = listMoves.substring(index + 2)
+                    listMoves = left + right
+                }else {
+                    left = listMoves.substring(0, index)
+                    right = listMoves.substring(index + 2)
+                    listMoves = left + listMoves.charAt(index + 1) + right
+                }
+                index--
+                break;
+
+            default:
+                // movesDefinitive += listMoves.charAt(index)
+                if (listMoves.charAt(index) == 'L') {
+                    cartesian[0] --
+                }
+                 if (listMoves.charAt(index) == 'R') {
+                    cartesian[0] ++
+                }
+                if (listMoves.charAt(index) == 'U') {
+                    cartesian[1] ++
+                }
+                if (listMoves.charAt(index) == 'D'){
+                    cartesian[1] --
+                }
+                break;
+        }
     }
-    return true
+    //console.log(movesDefinitive)
+    if (cartesian[0] == 0 && cartesian[1] == 0) {
+        return true
+    }else {
+        return cartesian
+    }
 }
 
 console.log(isRobotBack('R')     )// [1, 0]
