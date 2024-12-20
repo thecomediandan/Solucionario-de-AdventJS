@@ -58,7 +58,68 @@ function drawTable(data) {
     return table
 }
 
-console.log(drawTable([
+/**
+  * @param {Array<Object>} data
+  * @returns {string}
+  */
+function drawTable2(data) {
+    let table = ''
+    if (data.length > 0) {
+        if (Object.keys(data[0]).length > 0) {            
+            const columnHeaders = Object.keys(data[0])
+            let max = columnHeaders.map((header) => header.length)
+            
+            // Buscamos los máximos de cada columna
+            data.forEach((row) => {
+                for (let indexMax = 0; indexMax < columnHeaders.length; indexMax++) {                    
+                    if (row[columnHeaders[indexMax]] && (row[columnHeaders[indexMax]].toString().length > max[indexMax])) {
+                        max[indexMax] = row[columnHeaders[indexMax]].toString().length
+                    }
+                }
+            })
+            //console.log(max)
+            // Creamos la cabecera de la tabla
+            let lineUp = '+-'
+            let lineMiddle = '| '
+            for (let indexMax = 0; indexMax < columnHeaders.length; indexMax++) {
+                if (indexMax == columnHeaders.length - 1) {
+                    lineUp += '-'.repeat(max[indexMax]) + '-+'
+                    lineMiddle += columnHeaders[indexMax].charAt(0).toUpperCase().concat(columnHeaders[indexMax].slice(1)).padEnd(max[indexMax], ' ') + ' |'
+                }else {
+                    lineUp += '-'.repeat(max[indexMax]) + '-+-'
+                    lineMiddle += columnHeaders[indexMax].charAt(0).toUpperCase().concat(columnHeaders[indexMax].slice(1)).padEnd(max[indexMax], ' ') + ' | '
+                }
+            }
+            table += lineUp + '\n' + lineMiddle + '\n' + lineUp + '\n'
+
+            // Creamos los datos de la tabla
+            for (let indexRow = 0; indexRow < data.length; indexRow++) {
+                if (Object.keys(data[indexRow]).length > 0) {
+                    table += '| '                  
+                    for (let indexHeader = 0; indexHeader < columnHeaders.length; indexHeader++) {
+                        if (indexHeader == columnHeaders.length - 1) {
+                            if (data[indexRow][columnHeaders[indexHeader]] != undefined) {
+                                table += data[indexRow][columnHeaders[indexHeader]].toString().padEnd(max[indexHeader], ' ') + ' |\n'
+                            }else {
+                                table += ' '.padEnd(max[indexHeader], ' ') + ' |\n'
+                            }
+                        }else {
+                            if (data[indexRow][columnHeaders[indexHeader]] != undefined) {
+                                table += data[indexRow][columnHeaders[indexHeader]].toString().padEnd(max[indexHeader], ' ') + ' | '
+                            }else {
+                                table += ' '.padEnd(max[indexHeader], ' ') + ' | '
+                            }
+                        }                      
+                    }
+                }
+            }
+            table += lineUp
+        }  
+    }
+    return table
+}
+
+console.log(drawTable2([
     { name: 'Alice', city: 'London' },
     { name: 'Bob', city: 'Paris' },
     { name: 'Charlie', city: 'New York' }
@@ -71,7 +132,7 @@ console.log(drawTable([
   // | Charlie | New York  |
   // +---------+-----------+
   
-  console.log(drawTable([
+  console.log(drawTable2([
     { gift: 'Doll', quantity: 10 },
     { gift: 'Book'},
     { gift: 'Music CD', quantity: 1 }
@@ -86,7 +147,7 @@ console.log(drawTable([
 
   console.log(drawTable([]))
   console.log(drawTable([{}]))
-  console.log(drawTable([
+  console.log(drawTable2([
     { gift: 'Doll', quantity: 10, genre: 'female' },
     {},
     { gift: 'Music CD', quantity: false, genre: 'male' }
