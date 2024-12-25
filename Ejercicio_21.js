@@ -7,8 +7,39 @@
    * @returns {number} - Height of the tree.
    */
 function treeHeight(tree) {
-    // Write your code here
-    return 0
+  let ornaments = tree
+  let result = 0
+  if (ornaments) {
+    let flag = true   
+    result++
+    let row = []
+    if (ornaments.left) {
+      row.push(ornaments.left)
+    }
+    if (ornaments.right) {
+      row.push(ornaments.right)
+    }
+    if(!ornaments.left && !ornaments.right) {
+      flag = false
+    }
+    while (flag) {
+      let nextRow = []
+      flag = false
+      row.forEach((ornament) => {
+        if (ornament.left) {
+          nextRow.push(ornament.left)
+          flag = true
+        }
+        if (ornament.right) {
+          nextRow.push(ornament.right)
+          flag = true
+        }
+      })
+      result++
+      row = nextRow
+    }
+  }
+  return result
 }
 
 // Definición del árbol
@@ -46,5 +77,5 @@ const tree = {
   //  ⭐   🎅      🦌
   
   // Llamada a la función
-  treeHeight(tree)
+  console.log(treeHeight(tree))
   // Devuelve: 3
