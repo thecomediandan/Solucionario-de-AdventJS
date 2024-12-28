@@ -10,6 +10,8 @@
  */
 function generateGiftSets(gifts) {
     let result = []
+    let pointerStart = 0, pointerEnd = 0
+    let space = 0
     for (let index = 0; index < gifts.length; index++) {
         let gift = [...gifts[index]]
         for (let indexArray = 0; indexArray < index; indexArray++) {
