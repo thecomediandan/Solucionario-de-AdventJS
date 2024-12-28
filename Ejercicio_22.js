@@ -9,8 +9,15 @@
  * @returns {string[][]} - All possible combinations of gifts, sorted by length.
  */
 function generateGiftSets(gifts) {
-    // Code here
-    return []
+    let result = []
+    for (let index = 0; index < gifts.length; index++) {
+        let gift = [...gifts[index]]
+        for (let indexArray = 0; indexArray < index; indexArray++) {
+            
+        }
+        result.push(gift)
+    } 
+    return result
 }
 
 generateGiftSets(['car', 'doll', 'puzzle'])
