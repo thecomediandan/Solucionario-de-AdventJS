@@ -10,15 +10,26 @@
  */
 function generateGiftSets(gifts) {
     let result = []
-    let pointerStart = 0, pointerEnd = 0
     let space = 0
-    for (let index = 0; index < gifts.length; index++) {
-        let gift = [...gifts[index]]
-        for (let indexArray = 0; indexArray < index; indexArray++) {
-            
-        }
-        result.push(gift)
-    } 
+        for (let index = 1; index <= gifts.length; index++) {
+            let gift = []
+            for (let indexArray = index; indexArray <= Math.trunc(gifts.length / index); indexArray++) {
+                gift.push(gifts[indexArray])
+                if (space == 0) {
+                    for (let indexCombined = 0; (indexCombined < gifts.length); indexCombined++) {
+                        result.push([...[gifts[indexCombined]]])
+                }
+                }else {
+                    for (let indexCombined = gift.length; (indexCombined < gifts.length); indexCombined++) {
+                        result.push([...gift, gifts[indexCombined]])
+                }
+                }
+            }
+    
+            space++
+        } 
+
+    console.log(result)
     return result
 }
 
@@ -33,12 +44,12 @@ generateGiftSets(['car', 'doll', 'puzzle'])
 //   ['car', 'doll', 'puzzle']
 // ]
 
-generateGiftSets(['ball'])
+// generateGiftSets(['ball'])
 // [
 //   ['ball']
 // ]
 
-generateGiftSets(['game', 'pc'])
+// generateGiftSets(['game', 'pc'])
 // [
 //   ['game'],
 //   ['pc'],
