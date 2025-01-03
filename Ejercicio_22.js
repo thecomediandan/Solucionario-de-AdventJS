@@ -98,7 +98,49 @@ function generateGiftSets(gifts) {
     return result
 }
 
-generateGiftSets(['car', 'doll', 'puzzle'])
+/**
+ * @param {string[]} gifts - List of unique gifts.
+ * @returns {string[][]} - All possible combinations of gifts, sorted by length.
+ */
+function generateGiftSets2(gifts) {
+    let result = []
+
+    for (let indexLenght = 1; indexLenght <= gifts.length; indexLenght++) {
+        // Seteando punteros
+        let giftPointer = []
+
+        for (let indexGiftSelect = 0; indexGiftSelect < indexLenght; indexGiftSelect++) {
+            giftPointer.push(indexGiftSelect)
+        }
+        // La primera combinación
+        let giftSelected = []
+        for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
+            giftSelected.push(gifts[giftPointer[indexPointer]])
+        }
+        result.push(giftSelected)
+
+        // Generando combinaciones
+        while (giftPointer[0] != (gifts.length - giftPointer.length)) {            
+            for (let indexCombined = giftPointer.length - 1; indexCombined >= 0; indexCombined--) {
+                if (giftPointer[indexCombined] != (gifts.length - giftPointer.length)) {
+                    giftPointer[indexCombined]++
+
+                    let giftSelected = []
+                    for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
+                        giftSelected.push(gifts[giftPointer[indexPointer]])
+                    }
+                    result.push(giftSelected)
+                }else {
+                    break
+                }
+            }
+        }
+    }
+    console.log(result)
+    return result
+}
+
+generateGiftSets2(['car', 'doll', 'puzzle'])
 // [
 //   ['car'],
 //   ['doll'],
@@ -123,212 +165,54 @@ generateGiftSets(['game', 'pc'])
 
 generateGiftSets(['apple', 'banana', 'cherry', 'date'])
 // [
-//     [
-//       "apple"
-//     ],
-//     [
-//       "banana"
-//     ],
-//     [
-//       "cherry"
-//     ],
-//     [
-//       "date"
-//     ],
-//     [
-//       "apple",
-//       "banana"
-//     ],
-//     [
-//       "apple",
-//       "cherry"
-//     ],
-//     [
-//       "apple",
-//       "date"
-//     ],
-//     [
-//       "banana",
-//       "cherry"
-//     ],
-//     [
-//       "banana",
-//       "date"
-//     ],
-//     [
-//       "cherry",
-//       "date"
-//     ],
-//     [
-//       "apple",
-//       "banana",
-//       "cherry"
-//     ],
-//     [
-//       "apple",
-//       "banana",
-//       "date"
-//     ],
-//     [
-//       "apple",
-//       "cherry",
-//       "date"
-//     ],
-//     [
-//       "banana",
-//       "cherry",
-//       "date"
-//     ],
-//     [
-//       "apple",
-//       "banana",
-//       "cherry",
-//       "date"
-//     ]
+//     ["apple"],
+//     ["banana"],
+//     ["cherry"],
+//     ["date"],
+//     ["apple","banana"],
+//     ["apple","cherry"],
+//     ["apple","date"],
+//     ["banana","cherry"],
+//     ["banana","date"],
+//     ["cherry","date"],
+//     ["apple","banana","cherry"],
+//     ["apple","banana","date"],
+//     ["apple","cherry","date"],
+//     ["banana","cherry","date"],
+//     ["apple","banana","cherry","date"]
 //   ]
 
 generateGiftSets(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
 // [
-//     [
-//       "pen"
-//     ],
-//     [
-//       "notebook"
-//     ],
-//     [
-//       "eraser"
-//     ],
-//     [
-//       "pencil"
-//     ],
-//     [
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "notebook"
-//     ],
-//     [
-//       "pen",
-//       "eraser"
-//     ],
-//     [
-//       "pen",
-//       "pencil"
-//     ],
-//     [
-//       "pen",
-//       "marker"
-//     ],
-//     [
-//       "notebook",
-//       "eraser"
-//     ],
-//     [
-//       "notebook",
-//       "pencil"
-//     ],
-//     [
-//       "notebook",
-//       "marker"
-//     ],
-//     [
-//       "eraser",
-//       "pencil"
-//     ],
-//     [
-//       "eraser",
-//       "marker"
-//     ],
-//     [
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "eraser"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "pencil"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "eraser",
-//       "pencil"
-//     ],
-//     [
-//       "pen",
-//       "eraser",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "notebook",
-//       "eraser",
-//       "pencil"
-//     ],
-//     [
-//       "notebook",
-//       "eraser",
-//       "marker"
-//     ],
-//     [
-//       "notebook",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "eraser",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "eraser",
-//       "pencil"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "eraser",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "eraser",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "notebook",
-//       "eraser",
-//       "pencil",
-//       "marker"
-//     ],
-//     [
-//       "pen",
-//       "notebook",
-//       "eraser",
-//       "pencil",
-//       "marker"
-//     ]
+//     ["pen"],
+//     ["notebook"],
+//     ["eraser"],
+//     ["pencil"],
+//     ["marker"],
+//     ["pen","notebook"],
+//     ["pen","eraser"],
+//     ["pen","pencil"],
+//     ["pen","marker"],
+//     ["notebook","eraser"],
+//     ["notebook","pencil"],
+//     ["notebook","marker"],
+//     ["eraser","pencil"],
+//     ["eraser","marker"],
+//     ["pencil","marker"],
+//     ["pen","notebook","eraser"],
+//     ["pen","notebook","pencil"],
+//     ["pen","notebook","marker"],
+//     ["pen","eraser","pencil"],
+//     ["pen","eraser","marker"],
+//     ["pen","pencil","marker"],
+//     ["notebook","eraser","pencil"],
+//     ["notebook","eraser","marker"],
+//     ["notebook","pencil","marker"],
+//     ["eraser","pencil","marker"],
+//     ["pen","notebook","eraser","pencil"],
+//     ["pen","notebook","eraser","marker"],
+//     ["pen","notebook","pencil","marker"],
+//     ["pen","eraser","pencil","marker"],
+//     ["notebook","eraser","pencil","marker"],
+//     ["pen","notebook","eraser","pencil","marker"]
 // ]
