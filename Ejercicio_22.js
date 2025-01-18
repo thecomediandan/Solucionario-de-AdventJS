@@ -120,19 +120,47 @@ function generateGiftSets2(gifts) {
         result.push(giftSelected)
 
         // Generando combinaciones
-        while (giftPointer[0] != (gifts.length - giftPointer.length)) {            
-            for (let indexCombined = giftPointer.length - 1; indexCombined >= 0; indexCombined--) {
-                if (giftPointer[indexCombined] != (gifts.length - giftPointer.length)) {
-                    giftPointer[indexCombined]++
-
-                    let giftSelected = []
-                    for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
-                        giftSelected.push(gifts[giftPointer[indexPointer]])
-                    }
-                    result.push(giftSelected)
-                }else {
-                    break
+        // let limit = 0
+        // for (let indexCombined = giftPointer.length - 1; (indexCombined >= 0 && giftPointer.length < gifts.length); indexCombined--) {
+        //     for (let indexFinal = indexCombined + 1; indexFinal < (gifts.length - limit); indexFinal++) {
+        //         giftPointer[indexCombined] = indexFinal
+    
+        //         let giftSelected = []
+        //         for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
+        //             giftSelected.push(gifts[giftPointer[indexPointer]])
+        //         }
+        //         result.push(giftSelected)          
+        //     }
+        //     limit++
+        // }
+        let limit = 0
+        let indexCombined = giftPointer.length - 1
+        while (limit < giftPointer.length) {
+            for (let indexFinal = giftPointer[indexCombined] + 1; indexFinal < (gifts.length - limit); indexFinal++) {
+                
+                giftPointer[indexCombined] = indexFinal
+                let giftSelected = []
+                for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
+                    giftSelected.push(gifts[giftPointer[indexPointer]])
                 }
+                result.push(giftSelected)          
+            }
+
+            if (giftPointer[indexCombined] - giftPointer[indexCombined - 1] > 1) {
+                giftPointer[indexCombined - 1] ++
+
+                // todo este bloque debe de resetar los punteros desde el indexCombined hasta el final sumando 1
+                let finalElement = giftPointer[indexCombined - 1]
+                giftPointer[indexCombined] = finalElement + 1
+
+                let giftSelected = []
+                for (let indexPointer = 0; indexPointer < giftPointer.length; indexPointer++) {
+                    giftSelected.push(gifts[giftPointer[indexPointer]])
+                }
+                result.push(giftSelected)   
+            }else {
+                indexCombined--
+                limit++
             }
         }
     }
@@ -140,7 +168,8 @@ function generateGiftSets2(gifts) {
     return result
 }
 
-generateGiftSets2(['car', 'doll', 'puzzle'])
+// generateGiftSets(['car', 'doll', 'puzzle'])
+// generateGiftSets2(['car', 'doll', 'puzzle'])
 // [
 //   ['car'],
 //   ['doll'],
@@ -151,19 +180,20 @@ generateGiftSets2(['car', 'doll', 'puzzle'])
 //   ['car', 'doll', 'puzzle']
 // ]
 
-generateGiftSets(['ball'])
+// generateGiftSets(['ball'])
 // [
 //   ['ball']
 // ]
 
-generateGiftSets(['game', 'pc'])
+// generateGiftSets(['game', 'pc'])
 // [
 //   ['game'],
 //   ['pc'],
 //   ['game', 'pc']
 // ]
 
-generateGiftSets(['apple', 'banana', 'cherry', 'date'])
+// generateGiftSets(['apple', 'banana', 'cherry', 'date'])
+generateGiftSets2(['apple', 'banana', 'cherry', 'date'])
 // [
 //     ["apple"],
 //     ["banana"],
@@ -182,7 +212,7 @@ generateGiftSets(['apple', 'banana', 'cherry', 'date'])
 //     ["apple","banana","cherry","date"]
 //   ]
 
-generateGiftSets(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
+generateGiftSets2(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
 // [
 //     ["pen"],
 //     ["notebook"],

@@ -7,3 +7,4 @@ function prepareGifts(gifts) {
   
 const gifts = [34,45,32,10,5,7,34,10]
 console.log(prepareGifts(gifts))
+// [5, 7, 10, 32, 34, 45]
