@@ -168,6 +168,39 @@ function generateGiftSets2(gifts) {
     return result
 }
 
+function generateGiftSetsIA(items) {
+    // Array para almacenar todos los conjuntos
+    const result = [];
+    
+    // Función auxiliar para generar combinaciones
+    function generateCombinations(arr, size, start, current) {
+        // Si alcanzamos el tamaño deseado, agregamos la combinación actual
+        if (current.length === size) {
+            result.push([...current]);
+            return;
+        }
+        
+        // Iteramos desde el índice inicial hasta el final
+        for (let i = start; i < arr.length; i++) {
+            // Agregamos el elemento actual
+            current.push(arr[i]);
+            // Generamos combinaciones con los elementos restantes
+            generateCombinations(arr, size, i + 1, current);
+            // Removemos el elemento para probar la siguiente combinación
+            current.pop();
+        }
+    }
+    
+    // Generamos combinaciones para cada tamaño posible (1 hasta length)
+    for (let size = 1; size <= items.length; size++) {
+        generateCombinations(items, size, 0, []);
+    }
+    
+    console.log(result);
+
+    return result;
+}
+
 // generateGiftSets(['car', 'doll', 'puzzle'])
 // generateGiftSets2(['car', 'doll', 'puzzle'])
 // [
@@ -193,7 +226,8 @@ function generateGiftSets2(gifts) {
 // ]
 
 // generateGiftSets(['apple', 'banana', 'cherry', 'date'])
-generateGiftSets2(['apple', 'banana', 'cherry', 'date'])
+// generateGiftSets2(['apple', 'banana', 'cherry', 'date'])
+generateGiftSetsIA(['apple', 'banana', 'cherry', 'date'])
 // [
 //     ["apple"],
 //     ["banana"],
@@ -212,7 +246,8 @@ generateGiftSets2(['apple', 'banana', 'cherry', 'date'])
 //     ["apple","banana","cherry","date"]
 //   ]
 
-generateGiftSets2(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
+// generateGiftSets2(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
+generateGiftSetsIA(['pen', 'notebook', 'eraser', 'pencil', 'marker'])
 // [
 //     ["pen"],
 //     ["notebook"],
